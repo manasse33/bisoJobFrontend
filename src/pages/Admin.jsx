@@ -655,7 +655,7 @@ const AdminUsersPage = ({ sidebarWidth = 50 }) => {
   const [confirmModal, setConfirmModal] = useState({ isOpen: false, userId: null, newStatus: null });
   const [toast, setToast] = useState({ show: false, message: "", type: "" });
 
-  const API_URL = "http://192.168.0.147:8000/api/v1";
+  const API_URL = "https://bisojob.gt.tc/api/v1";
   const token = localStorage.getItem("token");
 
   const fetchUsers = async () => {
