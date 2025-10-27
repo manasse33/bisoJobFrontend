@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://192.168.0.147:8000/api/v1';
+const API_BASE_URL = 'https://bisojob.gt.tc/api/v1';
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('token');
