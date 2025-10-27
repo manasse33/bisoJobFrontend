@@ -322,7 +322,7 @@ const navigate = useNavigate();
                       <TrendingUp className="w-6 h-6" style={{ color: colors.lightBlue }} />
                     </div>
                     <div>
-                      <div className="text-2xl font-bold text-gray-900">2,340+</div>
+                      <div className="text-2xl font-bold text-gray-900">24+</div>
                       <div className="text-sm text-gray-600 font-medium">Projets réalisés</div>
                     </div>
                   </div>
@@ -342,7 +342,7 @@ const navigate = useNavigate();
                       <Users className="w-6 h-6" style={{ color: colors.darkBlue }} />
                     </div>
                     <div>
-                      <div className="text-2xl font-bold text-gray-900">847+</div>
+                      <div className="text-2xl font-bold text-gray-900">8+</div>
                       <div className="text-sm text-gray-600 font-medium">Freelances actifs</div>
                     </div>
                   </div>
