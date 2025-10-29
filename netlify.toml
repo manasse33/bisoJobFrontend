@@ -7,15 +7,3 @@
   status = 200
   force = true
 
-  # ✅ Ajout des bons headers pour éviter le CORS
-  headers = { 
-    Access-Control-Allow-Origin = "https://bisojob.netlify.app",
-    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, PATCH, OPTIONS",
-    Access-Control-Allow-Headers = "Content-Type, Authorization, X-Requested-With, Accept, X-XSRF-Token",
-    Access-Control-Allow-Credentials = "false"
-  }
-
-# ===============================
-# ✅ Gestion du SPA (React/Vite)
-# ===============================
-
