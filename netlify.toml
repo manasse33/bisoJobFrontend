@@ -1,9 +1,1 @@
 
-
-[[redirects]]
-  # Toute requête vers /api/... sur le front est envoyée vers le backend
-  from = "/api/*"
-  to = "https://bisojob.gt.tc/api/:splat"
-  status = 200
-  force = true
-
