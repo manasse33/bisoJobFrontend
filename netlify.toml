@@ -1,16 +1,4 @@
-# ===============================
-# ✅ Configuration principale Netlify
-# ===============================
 
-[build]
-  # Commande de build selon ton framework (Vite, React, etc.)
-  command = "npm run build"
-  # Dossier de sortie — adapte si besoin (pour React/Vite, c’est souvent "dist")
-  publish = "dist"
-
-# ===============================
-# ✅ Redirection du front vers le backend Laravel
-# ===============================
 
 [[redirects]]
   # Toute requête vers /api/... sur le front est envoyée vers le backend
