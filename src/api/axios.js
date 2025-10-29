@@ -5,7 +5,16 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
- 
+  withCredentials: true, // permet l'envoi des cookies
 });
+
+// Intercepteur pour log les erreurs
+api.interceptors.response.use(
+  response => response,
+  error => {
+    console.error('API error:', error.response?.status, error.message);
+    return Promise.reject(error);
+  }
+);
 
 export default api;
