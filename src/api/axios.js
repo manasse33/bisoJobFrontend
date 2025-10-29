@@ -5,31 +5,35 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true, // envoi des cookies
+  withCredentials: false, // ← Changez en false
 });
 
-// Intercepteur pour log les erreurs de façon détaillée
+// Intercepteur pour ajouter le token aux requêtes
+api.interceptors.request.use(
+  config => {
+    const token = localStorage.getItem('token'); // ou où vous stockez votre token
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  error => Promise.reject(error)
+);
+
+// Intercepteur pour log les erreurs
 api.interceptors.response.use(
   response => response,
   error => {
     console.error('=== AXIOS API ERROR ===');
-
     if (error.response) {
-      // La requête a été envoyée et le serveur a répondu avec un code d'erreur
       console.error('Status:', error.response.status);
-      console.error('StatusText:', error.response.statusText);
-      console.error('Headers:', error.response.headers);
       console.error('Data:', error.response.data);
     } else if (error.request) {
-      // La requête a été envoyée mais aucune réponse reçue
       console.error('No response received:', error.request);
     } else {
-      // Erreur sur la configuration de la requête
       console.error('Axios configuration error:', error.message);
     }
-
     console.error('Full error object:', error);
-
     return Promise.reject(error);
   }
 );
