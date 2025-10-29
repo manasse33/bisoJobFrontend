@@ -31,8 +31,3 @@
 # ✅ Gestion du SPA (React/Vite)
 # ===============================
 
-[[redirects]]
-  # Rediriger toutes les routes vers index.html (pour éviter 404 côté React)
-  from = "/*"
-  to = "/index.html"
-  status = 200
