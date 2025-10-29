@@ -1,5 +1,38 @@
+# ===============================
+# ✅ Configuration principale Netlify
+# ===============================
+
+[build]
+  # Commande de build selon ton framework (Vite, React, etc.)
+  command = "npm run build"
+  # Dossier de sortie — adapte si besoin (pour React/Vite, c’est souvent "dist")
+  publish = "dist"
+
+# ===============================
+# ✅ Redirection du front vers le backend Laravel
+# ===============================
+
 [[redirects]]
+  # Toute requête vers /api/... sur le front est envoyée vers le backend
   from = "/api/*"
   to = "https://bisojob.gt.tc/api/:splat"
   status = 200
   force = true
+
+  # ✅ Ajout des bons headers pour éviter le CORS
+  headers = { 
+    Access-Control-Allow-Origin = "https://bisojob.netlify.app",
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+    Access-Control-Allow-Headers = "Content-Type, Authorization, X-Requested-With, Accept, X-XSRF-Token",
+    Access-Control-Allow-Credentials = "true"
+  }
+
+# ===============================
+# ✅ Gestion du SPA (React/Vite)
+# ===============================
+
+[[redirects]]
+  # Rediriger toutes les routes vers index.html (pour éviter 404 côté React)
+  from = "/*"
+  to = "/index.html"
+  status = 200
