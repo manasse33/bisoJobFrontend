@@ -1,17 +1,17 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://bisojob.gt.tc/api/v1',
+  baseURL: '/api/v1', // ← CHANGEMENT ICI : URL relative !
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: false, // ← Changez en false
+  withCredentials: false,
 });
 
-// Intercepteur pour ajouter le token aux requêtes
+// Intercepteur pour ajouter le token
 api.interceptors.request.use(
   config => {
-    const token = localStorage.getItem('token'); // ou où vous stockez votre token
+    const token = localStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -31,9 +31,8 @@ api.interceptors.response.use(
     } else if (error.request) {
       console.error('No response received:', error.request);
     } else {
-      console.error('Axios configuration error:', error.message);
+      console.error('Error:', error.message);
     }
-    console.error('Full error object:', error);
     return Promise.reject(error);
   }
 );
