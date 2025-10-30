@@ -42,14 +42,7 @@
 //   const [showEmailVerificationScreen, setShowEmailVerificationScreen] = useState(false);
 //   const [registeredEmail, setRegisteredEmail] = useState('');
 
-// api.get('/test')
-//   .then(response => {
-//     console.log('✅ Succès:', response.data);
-//     // Vous devriez voir origin: "https://bisojob.netlify.app"
-//   })
-//   .catch(error => {
-//     console.error('❌ Erreur:', error.response || error.message);
-//   });
+//
 
 
 //   useEffect(() => {
