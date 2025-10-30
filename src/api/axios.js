@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://bisojob.gt.tc/api/v1',
+  baseURL: 'https://bisojobbackend.fly.dev/api/v1', // ← ici
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: false, // ← Changez en false
+  withCredentials: false, // ok pour CORS si tu n'utilises pas les cookies
 });
 
 // Intercepteur pour ajouter le token aux requêtes
