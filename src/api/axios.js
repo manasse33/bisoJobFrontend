@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://bisojobbackend.fly.dev/api/v1', // ← ici
+  baseURL: 'https://bisojobbackend.onrender.com/api/v1', // ← ici
   headers: {
     'Content-Type': 'application/json',
   },
