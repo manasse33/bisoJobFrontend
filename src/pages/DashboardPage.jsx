@@ -38,120 +38,127 @@ const COLORS = {
   lightBlueDark: '#3a8fc8', // Bleu moyen
 };
 
-// StatCard avec style M-Pesa moderne
+// StatCard avec les couleurs du logo
 const StatCard = ({ title, value, icon: Icon, colorScheme, trend, trendValue }) => {
-  const getColors = (scheme) => {
+  const getGradient = (scheme) => {
     switch(scheme) {
       case 'primary':
-        return { bg: COLORS.darkBlue, iconBg: COLORS.lightBlue };
+        return `linear-gradient(135deg, ${COLORS.darkBlue} 0%, ${COLORS.lightBlue} 100%)`;
       case 'secondary':
-        return { bg: COLORS.lightBlue, iconBg: COLORS.darkBlue };
+        return `linear-gradient(135deg, ${COLORS.lightBlue} 0%, ${COLORS.lightBlueDark} 100%)`;
       case 'accent':
-        return { bg: COLORS.gold, iconBg: COLORS.lightBlue };
+        return `linear-gradient(135deg, ${COLORS.lightBlue} 0%, ${COLORS.gold} 100%)`;
       case 'dark':
-        return { bg: COLORS.darkBlueDark, iconBg: COLORS.gold };
+        return `linear-gradient(135deg, ${COLORS.darkBlueDark} 0%, ${COLORS.darkBlue} 100%)`;
       default:
-        return { bg: COLORS.darkBlue, iconBg: COLORS.lightBlue };
+        return `linear-gradient(135deg, ${COLORS.darkBlue} 0%, ${COLORS.lightBlue} 100%)`;
     }
   };
 
-  const colors = getColors(colorScheme);
-
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -4, scale: 1.02 }}
-      transition={{ duration: 0.3 }}
-      className="relative overflow-hidden rounded-3xl bg-white p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.4 }}
+      className="relative overflow-hidden rounded-3xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300"
+      style={{
+        background: getGradient(colorScheme),
+      }}
     >
-      {/* Subtle gradient overlay */}
-      <div 
-        className="absolute top-0 right-0 w-32 h-32 rounded-full blur-3xl opacity-10"
-        style={{ background: colors.bg }}
-      />
+      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
       
       <div className="relative z-10">
-        <div className="flex items-start justify-between mb-4">
-          <div 
-            className="p-3 rounded-2xl shadow-sm"
-            style={{ backgroundColor: `${colors.iconBg}15` }}
-          >
-            <Icon className="h-6 w-6" style={{ color: colors.iconBg }} />
+        <div className="flex justify-between items-start mb-4">
+          <div className="flex-1">
+            <p className="text-white/90 text-sm font-medium mb-2">{title}</p>
+            <p className="text-white text-4xl font-bold mb-3">{value}</p>
+            
+            {trend && trendValue && (
+              <div className="flex items-center gap-1.5 text-white/90">
+                {trend === "up" ? (
+                  <ArrowUpRight className="h-4 w-4" />
+                ) : (
+                  <ArrowDownRight className="h-4 w-4" />
+                )}
+                <span className="font-semibold">{trendValue}% ce mois</span>
+              </div>
+            )}
           </div>
-          
-          {trend && trendValue && (
-            <div 
-              className="flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold"
-              style={{ 
-                backgroundColor: trend === "up" ? '#dcfce7' : '#fee2e2',
-                color: trend === "up" ? '#16a34a' : '#dc2626'
-              }}
-            >
-              {trend === "up" ? (
-                <ArrowUpRight className="h-3 w-3" />
-              ) : (
-                <ArrowDownRight className="h-3 w-3" />
-              )}
-              {trendValue}%
-            </div>
-          )}
-        </div>
 
-        <div>
-          <p className="text-gray-500 text-sm font-medium mb-1">{title}</p>
-          <p 
-            className="text-3xl font-bold tracking-tight"
-            style={{ color: colors.bg }}
-          >
-            {value}
-          </p>
+          <div className="bg-white/20 backdrop-blur-sm p-3 rounded-2xl">
+            <Icon className="h-7 w-7 text-white" />
+          </div>
         </div>
       </div>
     </motion.div>
   );
 };
 
-// ActivityItem avec style moderne minimaliste
+// ActivityItem avec les couleurs du logo
 const ActivityItem = ({ title, description, time, icon: Icon, color, projetId, onViewProject }) => {
   const colorMap = {
-    blue: { icon: COLORS.lightBlue, bg: `${COLORS.lightBlue}10` },
-    darkBlue: { icon: COLORS.darkBlue, bg: `${COLORS.darkBlue}10` },
-    gold: { icon: COLORS.gold, bg: `${COLORS.gold}10` },
-    lightBlue: { icon: COLORS.lightBlueDark, bg: `${COLORS.lightBlueDark}10` },
+    blue: { 
+      bg: `${COLORS.lightBlue}20`, 
+      icon: COLORS.lightBlue, 
+      border: `${COLORS.lightBlue}40` 
+    },
+    darkBlue: { 
+      bg: `${COLORS.darkBlue}20`, 
+      icon: COLORS.darkBlue, 
+      border: `${COLORS.darkBlue}40` 
+    },
+    gold: { 
+      bg: `${COLORS.gold}20`, 
+      icon: COLORS.gold, 
+      border: `${COLORS.gold}40` 
+    },
+    lightBlue: { 
+      bg: `${COLORS.lightBlueDark}20`, 
+      icon: COLORS.lightBlueDark, 
+      border: `${COLORS.lightBlueDark}40` 
+    },
   };
 
   const colors = colorMap[color] || colorMap.blue;
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: -20 }}
+      initial={{ opacity: 0, x: -10 }}
       animate={{ opacity: 1, x: 0 }}
       whileHover={{ x: 4 }}
-      className="group"
+      className="relative"
     >
-      <div className="flex items-start gap-4 p-4 rounded-2xl hover:bg-gray-50/80 transition-all duration-200">
+      <div 
+        className="absolute left-0 top-0 bottom-0 w-1 rounded-full" 
+        style={{ backgroundColor: colors.bg }}
+      />
+      
+      <div className="flex items-start gap-4 p-4 pl-6 rounded-xl hover:bg-gray-50/50 transition-all duration-200">
         <div 
-          className="p-2.5 rounded-xl flex-shrink-0 shadow-sm"
-          style={{ backgroundColor: colors.bg }}
+          className="p-2.5 rounded-full flex-shrink-0 border-2" 
+          style={{ 
+            backgroundColor: colors.bg,
+            borderColor: colors.border 
+          }}
         >
           <Icon className="h-5 w-5" style={{ color: colors.icon }} />
         </div>
         
         <div className="flex-1 min-w-0">
-          <p className="font-semibold text-gray-900 text-sm mb-1">{title}</p>
-          <p className="text-gray-500 text-xs leading-relaxed mb-2">{description}</p>
-          <div className="flex items-center gap-2">
-            <Clock className="h-3 w-3 text-gray-400" />
-            <p className="text-gray-400 text-xs">{time}</p>
-          </div>
+          <p className="font-bold text-gray-900 text-sm mb-1">{title}</p>
+          <p className="text-gray-500 text-xs leading-relaxed">{description}</p>
+          <p className="text-gray-400 text-xs mt-2">{time}</p>
         </div>
         
         {projetId && (
           <button
             onClick={() => onViewProject(projetId)}
-            className="flex items-center justify-center w-9 h-9 rounded-xl transition-all hover:scale-110 flex-shrink-0 opacity-0 group-hover:opacity-100"
-            style={{ backgroundColor: `${COLORS.lightBlue}15`, color: COLORS.lightBlue }}
+            className="flex items-center justify-center w-9 h-9 text-white rounded-full transition-all hover:scale-110 flex-shrink-0 shadow-md"
+            style={{ 
+              backgroundColor: COLORS.lightBlue,
+            }}
+            onMouseEnter={(e) => e.target.style.backgroundColor = COLORS.lightBlueDark}
+            onMouseLeave={(e) => e.target.style.backgroundColor = COLORS.lightBlue}
             title="Voir le projet"
           >
             <Eye className="w-4 h-4" />
@@ -468,28 +475,27 @@ const CategoryManagement = () => {
 
   return (
     <>
-      <div className="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100">
+      <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
-          <div>
-            <h2 className="text-xl md:text-2xl font-bold mb-1" style={{ color: COLORS.darkBlue }}>
-              Gestion des catégories
-            </h2>
-            <p className="text-sm text-gray-500">Organisez vos catégories de services</p>
-          </div>
+          <h2 className="text-xl md:text-2xl font-bold" style={{ color: COLORS.darkBlue }}>
+            Gestion des catégories
+          </h2>
           <button
             onClick={() => {
               setSelectedCategory(null);
               setIsModalOpen(true);
             }}
-            className="text-white px-4 md:px-5 py-2.5 md:py-3 rounded-2xl font-semibold flex items-center justify-center gap-2 transition-all hover:scale-105 shadow-sm w-full sm:w-auto"
-            style={{ backgroundColor: COLORS.lightBlue }}
+            className="text-white px-4 md:px-5 py-2.5 md:py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all hover:scale-105 shadow-md w-full sm:w-auto"
+            style={{ 
+              background: `linear-gradient(135deg, ${COLORS.darkBlue} 0%, ${COLORS.lightBlue} 100%)` 
+            }}
           >
             <Plus className="h-5 w-5" />
             Ajouter
           </button>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-2">
           {currentCategories.length > 0 ? (
             currentCategories.map((category, index) => {
               const stats = getCategoryStats(category.nom);
@@ -499,8 +505,18 @@ const CategoryManagement = () => {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05 }}
-                  className="group p-4 md:p-5 rounded-2xl border transition-all bg-white hover:shadow-md"
-                  style={{ borderColor: '#e5e7eb' }}
+                  className="group p-4 md:p-5 rounded-2xl border transition-all bg-white/50"
+                  style={{
+                    borderColor: '#e5e7eb'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = `${COLORS.lightBlue}40`;
+                    e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = '#e5e7eb';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
                 >
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div className="flex-1 min-w-0">
@@ -509,7 +525,7 @@ const CategoryManagement = () => {
                           {category.nom}
                         </h3>
                         {!category.est_active && (
-                          <span className="text-xs px-2.5 py-1 bg-red-50 text-red-600 rounded-full font-semibold whitespace-nowrap">
+                          <span className="text-xs px-2.5 py-1 bg-red-100 text-red-600 rounded-full font-semibold whitespace-nowrap">
                             Inactive
                           </span>
                         )}
@@ -517,7 +533,7 @@ const CategoryManagement = () => {
                       {category.description && (
                         <p className="text-gray-600 text-xs md:text-sm mb-3 line-clamp-2">{category.description}</p>
                       )}
-                      <div className="flex flex-wrap gap-3 text-xs text-gray-500">
+                      <div className="flex flex-wrap gap-3 md:gap-4 text-xs text-gray-500">
                         <span className="flex items-center gap-1.5 bg-gray-50 px-3 py-1.5 rounded-lg">
                           <Users className="h-3.5 w-3.5" />
                           <span className="font-medium">{stats.freelances}</span>
@@ -537,8 +553,10 @@ const CategoryManagement = () => {
                           setSelectedCategory(category);
                           setIsModalOpen(true);
                         }}
-                        className="p-2.5 md:p-3 rounded-xl transition-all hover:bg-gray-50"
+                        className="p-2.5 md:p-3 rounded-xl transition-all"
                         style={{ color: COLORS.lightBlue }}
+                        onMouseEnter={(e) => e.target.style.backgroundColor = `${COLORS.lightBlue}15`}
+                        onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
                         title="Modifier"
                       >
                         <Edit className="h-4 w-4 md:h-5 md:w-5" />
@@ -556,38 +574,32 @@ const CategoryManagement = () => {
               );
             })
           ) : (
-            <div className="text-center py-16 rounded-2xl bg-gray-50">
-              <div 
-                className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center"
-                style={{ backgroundColor: `${COLORS.lightBlue}15` }}
-              >
-                <FolderTree className="w-8 h-8" style={{ color: COLORS.lightBlue }} />
-              </div>
-              <p className="text-gray-600 font-semibold mb-1">Aucune catégorie</p>
-              <p className="text-gray-400 text-sm">Commencez par en créer une</p>
+            <div className="text-center py-12 md:py-16 border-2 border-dashed border-gray-200 rounded-2xl bg-gray-50/50">
+              <FolderTree className="w-12 h-12 md:w-16 md:h-16 text-gray-300 mx-auto mb-4" />
+              <p className="text-gray-500 font-medium text-sm md:text-base">Aucune catégorie pour l'instant</p>
             </div>
           )}
         </div>
 
         {totalPages > 1 && (
-          <div className="flex items-center justify-between mt-6 pt-6 border-t border-gray-100">
-            <p className="text-sm text-gray-500 font-medium">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mt-6 pt-6 border-t-2 border-gray-100">
+            <p className="text-xs md:text-sm text-gray-600 font-medium">
               Page {currentPage} sur {totalPages}
             </p>
             <div className="flex gap-2">
               <button
                 onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
                 disabled={currentPage === 1}
-                className="p-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="p-2.5 md:p-3 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <ChevronLeft className="w-5 h-5" />
+                <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
               </button>
               <button
                 onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
                 disabled={currentPage === totalPages}
-                className="p-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="p-2.5 md:p-3 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <ChevronRight className="w-5 h-5" />
+                <ChevronRight className="w-4 h-4 md:w-5 md:h-5" />
               </button>
             </div>
           </div>
@@ -652,9 +664,10 @@ const DashboardPage = ({ sidebarWidth = 50 }) => {
   if (loading) {
     return (
       <div
-        className="flex items-center justify-center min-h-screen bg-gray-50"
+        className="flex items-center justify-center min-h-screen"
         style={{ 
           marginLeft: sidebarWidth,
+          background: `linear-gradient(135deg, ${COLORS.lightBlue}10 0%, ${COLORS.darkBlue}05 100%)`
         }}
       >
         <div className="text-center">
@@ -676,9 +689,10 @@ const DashboardPage = ({ sidebarWidth = 50 }) => {
   if (!dashboardData) {
     return (
       <div
-        className="flex items-center justify-center min-h-screen bg-gray-50"
+        className="flex items-center justify-center min-h-screen"
         style={{ 
           marginLeft: sidebarWidth,
+          background: `linear-gradient(135deg, ${COLORS.lightBlue}10 0%, ${COLORS.darkBlue}05 100%)`
         }}
       >
         <p className="text-red-600 font-semibold text-lg">Impossible de charger les données.</p>
@@ -696,9 +710,10 @@ const DashboardPage = ({ sidebarWidth = 50 }) => {
 
   return (
     <main
-      className="min-h-screen pb-20 md:pb-0 bg-gray-50"
+      className="min-h-screen pb-20 md:pb-0"
       style={{ 
         marginLeft: window.innerWidth >= 768 ? sidebarWidth : 0,
+        background: `linear-gradient(135deg, ${COLORS.lightBlue}08 0%, ${COLORS.darkBlue}05 50%, white 100%)`
       }}
     >
       <PageHeader
@@ -712,8 +727,8 @@ const DashboardPage = ({ sidebarWidth = 50 }) => {
       />
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8">
-        {/* Stats Grid modernisé */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        {/* Stats Grid avec couleurs du logo */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6 md:mb-8">
           <StatCard
             title="Projets"
             value={stats.projects || 0}
@@ -811,19 +826,17 @@ const DashboardPage = ({ sidebarWidth = 50 }) => {
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Activities */}
           <div className="lg:col-span-2 space-y-6">
-            <div className="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100">
-              <div className="flex justify-between items-center mb-6">
-                <div>
-                  <h2 className="text-xl md:text-2xl font-bold mb-1" style={{ color: COLORS.darkBlue }}>
-                    Activités récentes
-                  </h2>
-                  <p className="text-sm text-gray-500">Vos dernières interactions</p>
-                </div>
+            <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100">
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-6">
+                <h2 className="text-xl md:text-2xl font-bold" style={{ color: COLORS.darkBlue }}>
+                  Activités récentes
+                </h2>
                 <button 
-                  className="text-sm font-semibold px-4 py-2 rounded-xl transition-all hover:scale-105"
-                  style={{ color: COLORS.lightBlue, backgroundColor: `${COLORS.lightBlue}10` }}
+                  className="text-sm font-semibold flex items-center gap-1 transition-all hover:gap-2 self-start sm:self-auto"
+                  style={{ color: COLORS.lightBlue }}
                 >
-                  Voir tout
+                  <span>VOIR TOUT</span>
+                  <ChevronRight className="h-4 w-4" />
                 </button>
               </div>
 
@@ -850,38 +863,33 @@ const DashboardPage = ({ sidebarWidth = 50 }) => {
                     />
                   ))
                 ) : (
-                  <div className="text-center py-16 rounded-2xl bg-gray-50">
-                    <div 
-                      className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center"
-                      style={{ backgroundColor: `${COLORS.lightBlue}15` }}
-                    >
-                      <AlertCircle className="w-8 h-8" style={{ color: COLORS.lightBlue }} />
-                    </div>
-                    <p className="text-gray-600 font-semibold mb-1">Aucune activité récente</p>
-                    <p className="text-gray-400 text-sm">Les activités apparaîtront ici</p>
+                  <div className="text-center py-12 md:py-16 border-2 border-dashed border-gray-200 rounded-2xl bg-gray-50/50">
+                    <AlertCircle className="w-12 h-12 md:w-16 md:h-16 text-gray-300 mx-auto mb-4" />
+                    <p className="text-gray-600 font-semibold mb-1 text-sm md:text-base">Aucune activité récente</p>
+                    <p className="text-gray-400 text-xs md:text-sm">Les activités apparaîtront ici</p>
                   </div>
                 )}
               </div>
 
               {totalActivitiesPages > 1 && (
-                <div className="flex items-center justify-between mt-6 pt-6 border-t border-gray-100">
-                  <p className="text-sm text-gray-500 font-medium">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mt-6 pt-6 border-t-2 border-gray-100">
+                  <p className="text-xs md:text-sm text-gray-600 font-medium">
                     Page {activitiesPage} sur {totalActivitiesPages}
                   </p>
                   <div className="flex gap-2">
                     <button
                       onClick={() => setActivitiesPage((prev) => Math.max(1, prev - 1))}
                       disabled={activitiesPage === 1}
-                      className="p-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="p-2.5 md:p-3 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      <ChevronLeft className="w-5 h-5" />
+                      <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
                     </button>
                     <button
                       onClick={() => setActivitiesPage((prev) => Math.min(totalActivitiesPages, prev + 1))}
                       disabled={activitiesPage === totalActivitiesPages}
-                      className="p-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="p-2.5 md:p-3 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                      <ChevronRight className="w-5 h-5" />
+                      <ChevronRight className="w-4 h-4 md:w-5 md:h-5" />
                     </button>
                   </div>
                 </div>
@@ -892,10 +900,10 @@ const DashboardPage = ({ sidebarWidth = 50 }) => {
             {userType === "admin" && <CategoryManagement />}
           </div>
 
-          {/* Quick Actions modernisé */}
+          {/* Quick Actions avec couleurs du logo */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 sticky top-24">
-              <h2 className="text-xl font-bold mb-6" style={{ color: COLORS.darkBlue }}>
+            <div className="bg-white rounded-3xl p-8 shadow-lg sticky top-24">
+              <h2 className="text-2xl font-bold mb-6" style={{ color: COLORS.darkBlue }}>
                 Actions rapides
               </h2>
 
@@ -904,16 +912,19 @@ const DashboardPage = ({ sidebarWidth = 50 }) => {
                   <>
                     <button
                       onClick={() => navigate("/project")}
-                      className="w-full text-white py-4 rounded-2xl font-semibold transition-all flex items-center justify-center gap-2 shadow-sm hover:shadow-lg hover:scale-105"
-                      style={{ backgroundColor: COLORS.lightBlue }}
+                      className="w-full text-white py-4 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl hover:scale-105"
+                      style={{ 
+                        background: `linear-gradient(135deg, ${COLORS.darkBlue} 0%, ${COLORS.lightBlue} 100%)` 
+                      }}
                     >
                       <Briefcase className="h-5 w-5" />
                       Publier un projet
                     </button>
                     <button 
-                      className="w-full py-4 rounded-2xl font-semibold transition-all"
+                      className="w-full py-4 rounded-xl font-semibold transition-all border-2"
                       style={{
-                        backgroundColor: `${COLORS.lightBlue}10`,
+                        backgroundColor: `${COLORS.lightBlue}15`,
+                        borderColor: `${COLORS.lightBlue}40`,
                         color: COLORS.lightBlue
                       }}
                     >
@@ -924,16 +935,19 @@ const DashboardPage = ({ sidebarWidth = 50 }) => {
                   <>
                     <button
                       onClick={() => navigate("/users")}
-                      className="w-full text-white py-4 rounded-2xl font-semibold transition-all flex items-center justify-center gap-2 shadow-sm hover:shadow-lg hover:scale-105"
-                      style={{ backgroundColor: COLORS.lightBlue }}
+                      className="w-full text-white py-4 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl hover:scale-105"
+                      style={{ 
+                        background: `linear-gradient(135deg, ${COLORS.darkBlue} 0%, ${COLORS.lightBlue} 100%)` 
+                      }}
                     >
                       <Users className="h-5 w-5" />
                       Gérer les utilisateurs
                     </button>
                     <button 
-                      className="w-full py-4 rounded-2xl font-semibold transition-all"
+                      className="w-full py-4 rounded-xl font-semibold transition-all border-2"
                       style={{
-                        backgroundColor: `${COLORS.lightBlue}10`,
+                        backgroundColor: `${COLORS.lightBlue}15`,
+                        borderColor: `${COLORS.lightBlue}40`,
                         color: COLORS.lightBlue
                       }}
                     >
@@ -944,16 +958,19 @@ const DashboardPage = ({ sidebarWidth = 50 }) => {
                   <>
                     <button
                       onClick={() => navigate("/profile")}
-                      className="w-full text-white py-4 rounded-2xl font-semibold transition-all flex items-center justify-center gap-2 shadow-sm hover:shadow-lg hover:scale-105"
-                      style={{ backgroundColor: COLORS.lightBlue }}
+                      className="w-full text-white py-4 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl hover:scale-105"
+                      style={{ 
+                        background: `linear-gradient(135deg, ${COLORS.darkBlue} 0%, ${COLORS.lightBlue} 100%)` 
+                      }}
                     >
                       <Briefcase className="h-5 w-5" />
                       Voir mon profil
                     </button>
                     <button 
-                      className="w-full py-4 rounded-2xl font-semibold transition-all"
+                      className="w-full py-4 rounded-xl font-semibold transition-all border-2"
                       style={{
-                        backgroundColor: `${COLORS.lightBlue}10`,
+                        backgroundColor: `${COLORS.lightBlue}15`,
+                        borderColor: `${COLORS.lightBlue}40`,
                         color: COLORS.lightBlue
                       }}
                     >
@@ -963,9 +980,10 @@ const DashboardPage = ({ sidebarWidth = 50 }) => {
                 )}
 
                 <button 
-                  className="w-full py-4 rounded-2xl font-semibold transition-all flex items-center justify-center gap-2"
+                  className="w-full py-4 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 border-2"
                   style={{
-                    backgroundColor: `${COLORS.lightBlue}10`,
+                    backgroundColor: `${COLORS.lightBlue}15`,
+                    borderColor: `${COLORS.lightBlue}40`,
                     color: COLORS.lightBlue
                   }}
                 >
@@ -974,35 +992,37 @@ const DashboardPage = ({ sidebarWidth = 50 }) => {
                 </button>
               </div>
 
-              {/* Profile Card modernisé */}
-              <div className="border-t border-gray-100 pt-6">
+              {/* Profile Card avec couleurs du logo */}
+              <div className="border-t-2 border-gray-100 pt-6">
                 <div className="text-center mb-4">
                   <div 
-                    className="w-16 h-16 text-white rounded-2xl flex items-center justify-center text-xl font-bold mx-auto mb-3 shadow-sm"
-                    style={{ backgroundColor: COLORS.lightBlue }}
+                    className="w-20 h-20 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-3 shadow-lg"
+                    style={{ 
+                      background: `linear-gradient(135deg, ${COLORS.darkBlue} 0%, ${COLORS.lightBlue} 100%)` 
+                    }}
                   >
                     {currentUser?.prenom?.charAt(0)}{currentUser?.nom?.charAt(0)}
                   </div>
-                  <h3 className="font-bold text-base mb-1" style={{ color: COLORS.darkBlue }}>
+                  <h3 className="font-bold text-lg" style={{ color: COLORS.darkBlue }}>
                     {currentUser?.prenom} {currentUser?.nom}
                   </h3>
                   <p className="text-sm text-gray-500 mb-3">
                     {userType === "freelance" ? "Freelance" : userType === "admin" ? "Administrateur" : "Client"}
                   </p>
-                  <span className="inline-block px-3 py-1 bg-green-50 text-green-600 text-xs font-semibold rounded-full">
-                    ● Actif
+                  <span className="inline-block px-4 py-1.5 bg-green-100 text-green-700 text-xs font-semibold rounded-full">
+                    Actif
                   </span>
                 </div>
 
                 <div 
-                  className="rounded-2xl p-4"
+                  className="rounded-2xl p-4 border-2"
                   style={{
-                    backgroundColor: `${COLORS.lightBlue}08`,
-                    border: `1px solid ${COLORS.lightBlue}20`
+                    background: `linear-gradient(135deg, ${COLORS.lightBlue}15 0%, ${COLORS.gold}15 100%)`,
+                    borderColor: `${COLORS.lightBlue}30`
                   }}
                 >
-                  <div className="flex items-start gap-3">
-                    <span className="text-xl">💡</span>
+                  <div className="flex items-start gap-2">
+                    <span className="text-2xl">💡</span>
                     <div>
                       <h3 className="text-sm font-bold mb-1" style={{ color: COLORS.darkBlue }}>
                         Conseil du jour
